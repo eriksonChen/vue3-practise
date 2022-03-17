@@ -35,6 +35,6 @@ export default {
 
 .event-link {
   text-decoration: none;
-  color: #336d1d;
+  color: #6a1d6d;
 }
 </style>
