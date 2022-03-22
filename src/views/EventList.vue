@@ -3,7 +3,7 @@
   <div class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
 
-    <div class="pagination">
+    <!-- <div class="pagination">
       <router-link
         id="page-prev"
         :to="{ name: 'EventList', query: { page: page - 1 } }"
@@ -19,15 +19,14 @@
         v-if="hasNextPage"
         >Next &#62;</router-link
       >
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import EventCard from '@/components/EventCard.vue'
-import EventService from '@/services/EventService.js'
 
-const eventNum = 3
+// const eventNum = 3
 
 export default {
   name: 'EventList',
@@ -35,40 +34,31 @@ export default {
   components: {
     EventCard,
   },
-  data() {
-    return {
-      events: null,
-      totalEvents: 0,
-    }
+  created() {
+    this.$store.dispatch('fetchEvents').catch((err) => {
+      this.$router.push({
+        name: 'ErrorDisplay',
+        params: { error: err },
+      })
+    })
   },
-  beforeRouteEnter(to, from, next) {
-    EventService.getEvents(eventNum, parseInt(to.query.page) || 1)
-      .then((response) => {
-        // router 會等 next 完成後再進行下一步
-        next((comp) => {
-          comp.events = response.data
-          comp.totalEvents = response.headers['x-total-count']
-        })
-      })
-      .catch(() => {
-        next({ name: 'NetworkError' })
-      })
-  },
-  beforeRouteUpdate(to) {
-    return EventService.getEvents(eventNum, parseInt(to.query.page) || 1)
-      .then((response) => {
-        this.events = response.data
-        this.totalEvents = response.headers['x-total-count']
-      })
-      .catch(() => {
-        return { name: 'NetworkError' }
-      })
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   EventService.getEvents()
+  //     .then((response) => {
+  //       next((comp) => {
+  //         comp.events = response.data
+  //       })
+  //     })
+  //     .catch(() => {
+  //       next({ name: 'NetworkError' })
+  //     })
+  // },
+  // beforeRouteUpdate() {
+  //   return this.$store.dispatch('fetchEvents')
+  // },
   computed: {
-    hasNextPage() {
-      var totalPages = Math.ceil(this.totalEvents / eventNum)
-
-      return this.page < totalPages
+    events() {
+      return this.$store.state.events
     },
   },
 }

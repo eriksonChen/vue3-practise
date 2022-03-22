@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EventList from '../views/EventList.vue'
-import EventService from '@/services/EventService.js'
 import Nprogress from 'nprogress'
 import GStore from '../store/GStore.js'
+// import store from '../store'
 
 const About = () => import('../views/About.vue')
 const EventLayout = () => import('../views/event/Layout.vue')
@@ -11,6 +11,8 @@ const EventRegister = () => import('../views/event/Register.vue')
 const EventEdit = () => import('../views/event/Edit.vue')
 const NetworkError = () => import('../views/NetworkError.vue')
 const NotFound = () => import('../views/NotFound.vue')
+const EventCreate = () => import('../views/event/Create.vue')
+const ErrorDisplay = () => import('../views/ErrorDisplay.vue')
 
 const routes = [
   {
@@ -23,22 +25,28 @@ const routes = [
     path: '/events/:id',
     name: 'EventLayout',
     props: true,
-    beforeEnter: (to) => {
-      return EventService.getEvent(to.params.id)
-        .then((res) => {
-          GStore.event = res.data
-        })
-        .catch((err) => {
-          if (err.response && err.response.status === 404) {
-            return {
-              name: '404NotFound',
-              params: { resource: 'event' },
-            }
-          } else {
-            return { name: 'NetworkError' }
-          }
-        })
-    },
+    // beforeEnter: (to) => {
+    //   return EventService.getEvent(to.params.id)
+    //     .then((res) => {
+    //       GStore.event = res.data
+    //     })
+    //     .catch((err) => {
+    //       if (err.response && err.response.status === 404) {
+    //         return {
+    //           name: '404NotFound',
+    //           params: { resource: 'event' },
+    //         }
+    //       } else {
+    //         return { name: 'NetworkError' }
+    //       }
+    //     })
+    //   store.dispatch('fetchEvent', to.params.id).catch((err) => {
+    //     return {
+    //       name: 'ErrorDisplay',
+    //       params: { error: err },
+    //     }
+    //   })
+    // },
     component: EventLayout,
     children: [
       {
@@ -65,8 +73,19 @@ const routes = [
     component: About,
   },
   {
+    path: '/event/Create',
+    name: 'EventCreate',
+    component: EventCreate,
+  },
+  {
     path: '/event/:afterEvent(.*)',
     redirect: (to) => ({ path: '/events/' + to.params.afterEvent }),
+  },
+  {
+    path: '/error/:error',
+    name: 'ErrorDisplay',
+    component: ErrorDisplay,
+    props: true,
   },
   {
     path: '/:catchAll(.*)',
