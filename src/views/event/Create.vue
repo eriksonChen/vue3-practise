@@ -16,6 +16,16 @@
 
     <BaseInput v-model="event.location" label="Location" type="text" required />
 
+    <h3>Time / Date</h3>
+    <BaseInput
+      label="Date"
+      type="date"
+      v-model="event.date"
+      required
+      id="erikson"
+    />
+    <BaseInput label="Time" type="time" v-model="event.time" required />
+
     <h3>Are pets allowed?</h3>
     <div>
       <baseRadioGroup :options="petsOptions" v-model="event.pets" name="pets" />
@@ -43,7 +53,6 @@
 
 <script>
 import { v4 as uuidv4 } from 'uuid'
-// import BaseInput from '@/components/BaseInput'
 
 export default {
   // components: { BaseInput },
@@ -64,6 +73,8 @@ export default {
         description: '',
         location: '',
         pets: 1,
+        date: '',
+        time: '',
         extras: {
           catering: false,
           music: false,
@@ -88,9 +99,11 @@ export default {
         id: uuidv4(),
         organizer: this.$store.state.user,
       }
+      console.log(event)
       this.$store
         .dispatch('createEvent', event)
-        .then(() => {
+        .then((res) => {
+          console.log(res)
           this.$router.push({
             name: 'EventDetails',
             params: { id: event.id },

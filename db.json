@@ -31,23 +31,18 @@
       "organizer": "Carey Wales"
     },
     {
-      "id": "ac5d509a-4021-4fb2-a3c8-8f33db612f89",
-      "category": "nature",
-      "title": "Erikson test",
-      "description": "Hello world~~",
-      "location": "erikson home",
-      "date": "2022-03-26",
-      "time": "21:32",
-      "organizer": "Erikson Chen"
-    },
-    {
-      "id": "e9982c3b-ec1b-43f4-9075-6d39fb0b28a0",
-      "category": "housing",
-      "title": "陳柏達 ",
-      "description": "apple",
-      "location": "twdd",
-      "date": "2022-03-25",
-      "time": "21:02",
+      "category": "food",
+      "title": "my food",
+      "description": "food",
+      "location": "asdf",
+      "pets": 1,
+      "date": "2022-03-17",
+      "time": "14:25",
+      "extras": {
+        "catering": true,
+        "music": true
+      },
+      "id": "cd3631b4-6029-4c14-9cc6-aefc5e824d1a",
       "organizer": "Erikson Chen"
     }
   ]

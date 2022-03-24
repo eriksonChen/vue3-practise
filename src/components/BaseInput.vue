@@ -8,12 +8,14 @@
     :placeholder="label"
     class="field"
     :value="modelValue"
+    :required="required"
     @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     label: {
       type: String,

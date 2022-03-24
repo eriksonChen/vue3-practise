@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 export function getMessage() {
-  return axios.get('http://localhost:3000/message').then((response) => {
-    return response.data
-  })
+  return axios
+    .get('https://my-json-server.typicode.com/eriksonChen/vue3-practise')
+    .then((response) => {
+      return response.data
+    })
 }
